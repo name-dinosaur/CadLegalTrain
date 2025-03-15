@@ -10,3 +10,8 @@ downloading the dataset...
   1. (bash) pip install dataset
   2. run dataset.py
 
+Vecotrize 
+  1.(bash) pip install datasets pandas numpy sentence-transformers scikit-learn transformers
+  2. run vectorize.py
+
+
