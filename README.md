@@ -16,10 +16,12 @@ Vecotrize
 
 Cluster
   1. pip install
+  
   (change the amount of cluster to play with accuracy)
   3. run cluster_function.py
 
 Tokenize
   1. pip install
+  
   (change the llm model to tokenize for different model)
   3. run tokenzie.py
