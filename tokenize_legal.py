@@ -9,7 +9,7 @@ print(f"Dataset contains {len(df_reduced)} legal cases.")
 
 ### ✅ Step 2: Load an Open-Source Tokenizer (LLaMA 1) ###
 print("Loading open-source tokenizer (LLaMA 1)...")
-tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/llama-tokenizer")
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
 
 # ✅ Manually set the padding token (LLaMA models don’t have one by default)
 tokenizer.pad_token = tokenizer.eos_token
@@ -23,4 +23,4 @@ df_reduced["tokens"] = df_reduced["unofficial_text"].apply(
 ### ✅ Step 4: Save the Tokenized Dataset ###
 df_reduced.to_json("tokenized_legal_dataset.json", orient="records")
 
-print("✅ Tokenization complete! Ready for LLaMA 2 fine-tuning. 🚀")
+print("✅ Tokenization complete! Ready for GPT 2 fine-tuning. 🚀")
