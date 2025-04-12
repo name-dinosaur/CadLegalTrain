@@ -23,3 +23,5 @@ Tokenize
   1. pip install
   (change the llm model to tokenize for different model)
   2. run tokenzie.py
+
+pip install fpdf
