@@ -12,16 +12,16 @@ from transformers import (
 print("Loading tokenized dataset...")
 dataset = load_dataset("json", data_files="tokenized_legal_dataset_gpt2.json", split="train")
 
-# Load GPT-2 tokenizer and model 
+# Load GPT 2 tokenizer and model 
 print("Loading GPT-2 model and tokenizer...")
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-tokenizer.pad_token = tokenizer.eos_token  # GPT-2 has no pad token
+tokenizer.pad_token = tokenizer.eos_token 
 
 model = GPT2LMHeadModel.from_pretrained("gpt2")
 model.resize_token_embeddings(len(tokenizer))
-model.eval()  # Safer default unless training
+model.eval() 
 
-# Format dataset for GPT-2
+# Format dataset for GPT 2
 print("Formatting dataset...")
 
 def format_sample(example):
@@ -30,7 +30,7 @@ def format_sample(example):
         "attention_mask": [1] * len(example["tokens"])
     }
 
-# Use a small subset first (1000 examples)
+# 1000 examples
 dataset = dataset.shuffle(seed=42).select(range(1000))
 dataset = dataset.map(format_sample)
 
@@ -68,8 +68,8 @@ trainer = Trainer(
 trainer.train()
 
 # Save final model
-print("✅ Training complete. Saving model...")
+print("Training complete. Saving model...")
 trainer.save_model("./gpt2-legal-final")
 tokenizer.save_pretrained("./gpt2-legal-final")
 
-print("All done! Your model is safely fine-tuned and saved.")
+print("model is fine tuned and saved")

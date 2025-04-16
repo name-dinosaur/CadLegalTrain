@@ -46,4 +46,4 @@ np.save("legal_text_embeddings_80.npy", embeddings_array)
 
 # store in DataFrame
 train_df["embeddings"] = list(embeddings)
-print(f"Finished encoding! Saved embeddings with shape: {embeddings_array.shape}")
+print(f"Saved embeddings with shape: {embeddings_array.shape}")
