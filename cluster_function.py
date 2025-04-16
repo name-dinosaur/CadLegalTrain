@@ -28,4 +28,4 @@ print(f"Reduced dataset from {len(df)} to {len(df_reduced)} samples.")
 
 # Save Clustered Representative Samples
 df_reduced.to_csv("clustered_legal_data.csv", index=False)
-print("Clustered dataset saved as 'clustered_legal_data.csv'. Ready for tokenization! 🚀")
+print("Clustered dataset saved as 'clustered_legal_data.csv'")
