@@ -1,17 +1,17 @@
 import pandas as pd
-from transformers import AutoTokenizer
+from transformers import GPT2Tokenizer
 
-### ✅ Step 1: Load the Clustered Dataset ###
+### Load the Clustered Dataset ###
 print("Loading clustered dataset...")
 df_reduced = pd.read_csv("clustered_legal_data.csv")
 
 print(f"Dataset contains {len(df_reduced)} legal cases.")
 
-### ✅ Step 2: Load an Open-Source Tokenizer (LLaMA 1) ###
-print("Loading open-source tokenizer (LLaMA 1)...")
-tokenizer = AutoTokenizer.from_pretrained("gpt2")
+### ✅ Step 2: Load GPT-2 Tokenizer ###
+print("Loading GPT-2 tokenizer...")
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
-# ✅ Manually set the padding token (LLaMA models don’t have one by default)
+# ✅ GPT-2 has no pad token — set pad_token to eos_token
 tokenizer.pad_token = tokenizer.eos_token
 
 ### ✅ Step 3: Tokenization ###
@@ -21,6 +21,6 @@ df_reduced["tokens"] = df_reduced["unofficial_text"].apply(
 )
 
 ### ✅ Step 4: Save the Tokenized Dataset ###
-df_reduced.to_json("tokenized_legal_dataset.json", orient="records")
+df_reduced.to_json("tokenized_legal_dataset_gpt2.json", orient="records")
 
-print("✅ Tokenization complete! Ready for GPT 2 fine-tuning. 🚀")
+print("✅ Tokenization complete! Ready for GPT-2 fine-tuning. 🚀")
