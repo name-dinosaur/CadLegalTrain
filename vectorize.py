@@ -8,7 +8,7 @@ from transformers import AutoTokenizer
 import torch
 from tqdm import tqdm
 
-### ✅ Step 1: Load Dataset ###
+# Load Dataset
 print("Loading dataset...")
 dataset = load_from_disk("canadian_legal_data")["train"]
 
@@ -19,9 +19,9 @@ df = df[["unofficial_text"]].dropna()  # Keep only text column
 print(f"Total rows: {df.shape[0]}")
 print(f"Dataset Size in RAM: {df.memory_usage(deep=True).sum() / 1e9:.2f} GB")
 
-### ✅ Step 2: Vectorize Using Sentence Embeddings ###
+# Vectorize Using Sentence Embeddings
 print("Loading embedding model...")
-device = "cuda" if torch.cuda.is_available() else "cpu"  # Automatically use GPU if available
+device = "cuda" if torch.cuda.is_available() else "cpu"  # use GPU if available
 print(f"Using device: {device}")
 
 model = SentenceTransformer("all-MiniLM-L6-v2", device=device)  # Load model onto GPU
@@ -41,5 +41,5 @@ np.save("legal_text_embeddings.npy", embeddings_array)
 # Store embeddings in DataFrame
 df["embeddings"] = list(embeddings)
 
-print(f"Finished encoding! Saved embeddings with shape: {embeddings_array.shape}")
+print(f"Saved embeddings with shape: {embeddings_array.shape}")
 
