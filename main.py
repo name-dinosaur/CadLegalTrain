@@ -90,9 +90,7 @@ if __name__ == '__main__':
     model = SentenceTransformer(MODEL_NAME, device=device)
     print("Model loaded.")
 
-    print(f"Saving model to {MODEL_SAVE_PATH}...")
-    model.save(MODEL_SAVE_PATH)
-    print("Model saved.")
+    
 
     # Check for saved embeddings
     if os.path.exists(EMBEDDINGS_SAVE_PATH) and os.path.exists(IDS_SAVE_PATH):
