@@ -2,12 +2,10 @@ import os
 from datasets import load_dataset
 from sentence_transformers import SentenceTransformer, util
 import torch
-import numpy as np
 import time
 import gc
 import pickle
-import re # Import the regular expression module
-
+import re
 
 MODEL_NAME = 'all-MiniLM-L6-v2'
 TOP_N = 10
@@ -20,6 +18,7 @@ NUM_LAWS_TO_PROCESS = None
 MODEL_SAVE_PATH = "saved_model"
 EMBEDDINGS_SAVE_PATH = "law_embeddings.pkl"
 IDS_SAVE_PATH = "law_ids.pkl"
+
 
 def clean_text_between_citation_and_signature(text):
     citation_pattern = r'(\d{4}\s+CHRT\s+\d{1,2})\s*\n(\d{4}/\d{2}/\d{2})'
@@ -43,6 +42,7 @@ def clean_text_between_citation_and_signature(text):
 
     return cleaned_text
 
+
 def prepare_and_filter_data(dataset, text_field='unofficial_text', id_field='name'):
     """Filters dataset for valid text and ID, cleans, and truncates text."""
     valid_items = []
@@ -50,11 +50,12 @@ def prepare_and_filter_data(dataset, text_field='unofficial_text', id_field='nam
         text = item.get(text_field)
         identifier = item.get(id_field)
         if text and identifier:
-            cleaned_text = clean_text_between_citation_and_signature(text) # Clean the text
+            cleaned_text = clean_text_between_citation_and_signature(text)
             words = cleaned_text.split()
             truncated_text = " ".join(words[:MAX_TEXT_WORDS])
             valid_items.append({'id': identifier, 'text': truncated_text})
     return valid_items
+
 
 if __name__ == '__main__':
     print("Loading datasets...")
@@ -93,20 +94,40 @@ if __name__ == '__main__':
     model.save(MODEL_SAVE_PATH)
     print("Model saved.")
 
-    print("Computing embeddings for laws/regulations...")
-    start_time = time.time()
-    law_embeddings = model.encode(law_texts, convert_to_tensor=True, show_progress_bar=True, device=device)
-    end_time = time.time()
-    print(f"Computed {len(law_embeddings)} embeddings in {end_time - start_time:.2f} seconds.")
+    # Check for saved embeddings
+    if os.path.exists(EMBEDDINGS_SAVE_PATH) and os.path.exists(IDS_SAVE_PATH):
+        print(f"Loading saved embeddings from {EMBEDDINGS_SAVE_PATH}...")
+        law_embeddings = torch.load(EMBEDDINGS_SAVE_PATH, map_location=device)
+        with open(IDS_SAVE_PATH, 'rb') as f:
+            saved_law_ids = pickle.load(f)
 
-    print(f"Saving embeddings to {EMBEDDINGS_SAVE_PATH}...")
-    torch.save(law_embeddings, EMBEDDINGS_SAVE_PATH)
-    print("Embeddings saved.")
+        # Verify loaded IDs match current data
+        if saved_law_ids == law_ids:
+            print("Loaded embeddings successfully.")
+        else:
+            print("Warning: Saved law IDs do not match current data. Recomputing embeddings...")
+            del law_embeddings, saved_law_ids
+            gc.collect()
+            law_embeddings = None
+    else:
+        law_embeddings = None
 
-    print(f"Saving law IDs to {IDS_SAVE_PATH}...")
-    with open(IDS_SAVE_PATH, 'wb') as f:
-        pickle.dump(law_ids, f)
-    print("Law IDs saved.")
+    # Compute embeddings if not loaded
+    if law_embeddings is None:
+        print("Computing embeddings for laws/regulations...")
+        start_time = time.time()
+        law_embeddings = model.encode(law_texts, convert_to_tensor=True, show_progress_bar=True, device=device)
+        end_time = time.time()
+        print(f"Computed {len(law_embeddings)} embeddings in {end_time - start_time:.2f} seconds.")
+
+        print(f"Saving embeddings to {EMBEDDINGS_SAVE_PATH}...")
+        torch.save(law_embeddings, EMBEDDINGS_SAVE_PATH)
+        print("Embeddings saved.")
+
+        print(f"Saving law IDs to {IDS_SAVE_PATH}...")
+        with open(IDS_SAVE_PATH, 'wb') as f:
+            pickle.dump(law_ids, f)
+        print("Law IDs saved.")
 
     del law_texts
     gc.collect()
@@ -125,12 +146,12 @@ if __name__ == '__main__':
         case = supreme_court_cases[i]
         case_identifier = case.get('citation') or case.get('name')
         case_text = case.get('unofficial_text')
-
+        print(f"Case identifier:{case_identifier}")
         if not case_identifier or not case_text:
             print(f"Skipping case index {i} (ID: {case_identifier or 'Unknown'}) due to missing identifier or text.")
             continue
 
-        cleaned_case_text = clean_text_between_citation_and_signature(case_text) # Clean the text
+        cleaned_case_text = clean_text_between_citation_and_signature(case_text)
         words = cleaned_case_text.split()
         truncated_case_text = " ".join(words[:MAX_TEXT_WORDS])
 
@@ -178,5 +199,5 @@ if __name__ == '__main__':
             print("  No relevant laws found (or processed).")
         else:
             for i, (law_name, score) in enumerate(ranked_laws):
-                print(f"  {i+1}. {law_name} (Similarity: {score:.4f})")
+                print(f"  {i + 1}. {law_name} (Similarity: {score:.4f})")
         display_count += 1
