@@ -77,19 +77,32 @@ Ensure you have navigated to the directory with this code, then follow the steps
   bash: ./dataset.py
 
 #### 2. Vectorization 
-  bash: ./vectorize.py
+  bash: ./vectorize.py or (split_vectorize_dataset.py)
 
 #### 3. Cluster
   bash: ./cluster_function.py
 
 #### 4. Tokenize
 
-  bash: ./tokenize.py
+  bash: ./tokenize.py (tokenize_legal.py)
 
 #### 5. Law Identification
 
   bash: ./main.py
 
+  
+#### 6. Train gpt-2 (Diego)
+
+  
+  bash: ./train.py
+
+
+#### 7. Test Model (Diego)
+
+
+  bash: ./testgpt-2.py
+
+  
 ### Folder Structure changes
 
 After running the code, there will be no additional <u>folders</u>, although a json file will be generated.
