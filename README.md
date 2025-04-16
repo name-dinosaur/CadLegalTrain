@@ -100,3 +100,6 @@ VSCode for writing code
 
 Github Desktop for managing and pushing commits to the repository
 
+## AI Usage
+We did NOT use <u>any</u> AI tools for this project.
+
