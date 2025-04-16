@@ -18,11 +18,6 @@ For this program, we utilized the Python programming language for all of our cod
 
 COMP482-Project\CadLegalTrain
 COMP482-Project\CadLegalTrain\canadian_legal_data\train
-COMP482-Project\CadLegalTrain\clean
-COMP482-Project\CadLegalTrain\saved_model
-COMP482-Project\CadLegalTrain\saved_model\1_Pooling
-COMP482-Project\CadLegalTrain\saved_model\2_Normalize
-
 
 COMP482-Project\Progress Logs
 COMP482-Project\Progress Logs\Sachin Muthayan
@@ -32,7 +27,7 @@ COMP482-Project\Progress Logs\Diego Mackay
 
 COMP482-Project\Images
 
-Please note that this does not include any <u><b>files such as code or images<b></u> contained within the folders.
+Please note that this does not include any <u><b>files such as python code or images<b></u> contained within the folders.
 
 ## Installation and complation guide
 
@@ -97,7 +92,7 @@ Ensure you have navigated to the directory with this code, then follow the steps
 
 ### Folder Structure changes
 
-Add folder structure changes after running the five steps above.
+After running the code, there will be no additional <u>folders</u>, although a json file will be generated.
 
 ## Tools used
 
