@@ -1,27 +1,107 @@
 # CadLegalTrain
 
-Goal -- Train a local llm using cad law dataset
- 
- --This will have instructions and steps taken during the process for documentation
- 
-SETUP
-downloading the dataset...
+
+## Introduction
+This program was developed for COMP482 - Natural Language Processing.
+
+The purpose of this program is to identify the laws cited in Canadian legal cases, which can be expanded in the future to identify legal strategies for solving cases. First, datasets of Canadian legislation and regulations are cleaned and highlight the citation each law. Then, texts of legal cases are put into our sentence transformer model to find law citations. Lastly, the extracted citations are compared against citations from the law datsets to determine the laws used, as well as the accuracy of identified laws, and outputs all laws used in the case as well as the accuracy of the law cited being correctly identified to the user.
+
+## Development Environment Configuration
+
+This program was developed and designed to be run on a Windows 10 Home or Windows 11 Home 64 bit based machine. 
+
+## Programming Languages Utilized
+
+For this program, we utilized the Python programming language for all of our code. After running code, a few JSON files will be generated to store text embeddings.
+
+## Project Folder Hierarchy
+
+COMP482-Project\CadLegalTrain
+COMP482-Project\CadLegalTrain\canadian_legal_data\train
+COMP482-Project\CadLegalTrain\clean
+COMP482-Project\CadLegalTrain\saved_model
+COMP482-Project\CadLegalTrain\saved_model\1_Pooling
+COMP482-Project\CadLegalTrain\saved_model\2_Normalize
+
+
+COMP482-Project\Progress Logs
+COMP482-Project\Progress Logs\Sachin Muthayan
+COMP482-Project\Progress Logs\Mason Paquette
+COMP482-Project\Progress Logs\Jasan Brar
+COMP482-Project\Progress Logs\Diego Mackay
+
+COMP482-Project\Images
+
+Please note that this does not include any <u><b>files such as code or images<b></u> contained within the folders.
+
+## Installation and complation guide
+
+Please follow the steps below to successfully run our program.
+
+### Library Installation
+
+import torch
+from tqdm import tqdm
+
+#### re, os, time, and pickle
+These are standard libraries built into Python, they do not require installation.
+
+#### numPy
+**Command:** py -m pip install numpy **OR** pip install numpy
+
+#### Pandas
+**Command:** py -m pip install pandas **OR** pip install pandas
+
+#### gc
+**Command:** py -m pip install gc **OR** pip install gc
+
+#### KMeans and pairwise_distances_argmin_min
+**Command:** py -m pip install scikit-learn **OR** pip install scikit-learn
+
+#### Datasets
+**Command:** py -m pip install datasets **OR** pip install datasets
+
+#### Sentence Transformers
+**Command:** py -m pip install -U sentence-transformers **OR** pip install -U sentence-transformers
+
+#### Transformers
+**Command:** py -m pip install transformers **OR** pip install transformers
+
+#### PyTorch
+**Command:** py -m pip install torch **OR** pip install torch
+
+#### tqdm
+**Command:** py -m pip install tqdm **OR** pip install tqdm
+
+### Compilation Commands
+
+Ensure you have navigated to the directory with this code, then follow the steps below and enter the following commands in a CLI terminal:
+
+#### 1. Setup
   
-  1. (bash) pip install dataset
-  2. run dataset.py
+  bash: ./dataset.py
 
-Vecotrize 
-  1.(bash) pip install datasets pandas numpy sentence-transformers scikit-learn transformers
-  2. run vectorize.py
+#### 2. Vectorization 
+  bash: ./vectorize.py
 
-Cluster
-  1. pip install
-  (change the amount of cluster to play with accuracy)
-  2. run cluster_function.py
+#### 3. Cluster
+  bash: ./cluster_function.py
 
-Tokenize
-  1. pip install
-  (change the llm model to tokenize for different model)
-  2. run tokenzie.py
+#### 4. Tokenize
 
-pip install fpdf
+  bash: ./tokenize.py
+
+#### 5. Law Identification
+
+  bash: ./main.py
+
+### Folder Structure changes
+
+Add folder structure changes after running the five steps above.
+
+## Tools used
+
+VSCode for writing code
+
+Github Desktop for managing and pushing commits to the repository
+
