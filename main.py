@@ -57,6 +57,7 @@ def prepare_and_filter_data(dataset, text_field='unofficial_text', id_field='nam
     return valid_items
 
 
+# Loading the specific data instance of 'legislation', 'regulations', 'SCC' from the bulk data of 'https://huggingface.co/datasets/refugee-law-lab/canadian-legal-data'.
 if __name__ == '__main__':
     print("Loading datasets...")
     legislation_ds = load_dataset("refugee-law-lab/canadian-legal-data", "LEGISLATION-FED", split='train')
